@@ -6,10 +6,10 @@ const pool = require('../modules/pool.js');
 router.get('/', (req, res) => {
     // When you fetch all things in these GET routes, strongly encourage ORDER BY
     // so that things always come back in a consistent order 
-    const sqlText = `SELECT * FROM creatures ORDER BY name, origin DESC;`;
+    const sqlText = `SELECT * FROM creatures ORDER BY id;`;
     pool.query(sqlText)
         .then((result) => {
-            console.log(`Got stuff back from the database`, result);
+            // console.log(`Got stuff back from the database`, result);
             res.send(result.rows);
         })
         .catch((error) => {
@@ -35,6 +35,18 @@ router.post('/', (req, res) => {
             console.log(`Error making database query ${sqlText}`, error);
             res.sendStatus(500); // Good server always responds
         })
+})
+
+router.delete('/:id', (req, res) => {
+    console.log('In DELTE request for /todo');
+    let deleteId = req.params.id;
+    let queryText = 'DELETE FROM creatures WHERE id = $1';
+    pool.query(queryText, [deleteId]).then((result) =>{
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log(`Error in delete ${error}`);
+        res.sendStatus(500);
+    })
 })
 
 
