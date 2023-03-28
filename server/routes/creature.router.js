@@ -61,5 +61,18 @@ router.put('/sighting/:id', (req, res) => {
     })
 })
 
+router.put('/color/:id', (req, res) => {
+    console.log('In PUT request for /color');
+    let color = req.body.color;
+    console.log(color);
+    let updateId = req.params.id;
+    let queryText = 'UPDATE creatures SET color = $1 WHERE id = $2';
+    pool.query(queryText, [color, updateId]).then((response) => {
+        res.sendStatus(200);
+    }).catch((error => {
+        console.log(`Error in PUT ${error}`);
+        res.sendStatus(500);
+    }))
+})
 
 module.exports = router;
