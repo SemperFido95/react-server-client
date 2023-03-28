@@ -14,11 +14,21 @@ function CreatureItem({ creature, fetchCreatureList }) {
         })
     }
 
+    let increaseSightings = event => {
+        axios.put(`/creature/sighting/${creature.id}`).then((response) => {
+            fetchCreatureList();
+        }).catch((error) => {
+            console.log(`Error in increaseSightings ${error}`);
+            alert('Something went wrong.');
+        })
+    }
 
     return (
         // what we want to render
         <li style={creature.name[0] === 'J' ? {textDecoration: 'underline'} : {textDecoration: 'none'}}>
             {creature.name} from {creature.origin}
+            <p>Sightings: {creature.sightings}</p>
+            <button onClick={(event) => {increaseSightings()}}>Increase Sightings</button>
             <button onClick={(event) => {removeCreature()}}>Delete</button>
         </li>
         

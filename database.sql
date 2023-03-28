@@ -12,3 +12,6 @@ VALUES ('Jakalope', 'USA'),
 ('Chupacabra', 'Mexico'), 
 ('Phoenix', 'Saudi Arabia');
 
+ALTER TABLE creatures
+ADD COLUMN sightings INT DEFAULT 0,
+ADD COLUMN color VARCHAR(25) DEFAULT 'teal';

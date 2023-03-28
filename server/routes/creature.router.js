@@ -38,13 +38,25 @@ router.post('/', (req, res) => {
 })
 
 router.delete('/:id', (req, res) => {
-    console.log('In DELTE request for /todo');
+    console.log('In DELTE request for /creature');
     let deleteId = req.params.id;
     let queryText = 'DELETE FROM creatures WHERE id = $1';
     pool.query(queryText, [deleteId]).then((result) =>{
         res.sendStatus(200);
     }).catch((error) => {
         console.log(`Error in delete ${error}`);
+        res.sendStatus(500);
+    })
+})
+
+router.put('/sighting/:id', (req, res) => {
+    console.log('In PUT request for /creature/sighting');
+    let updateId = req.params.id;
+    let queryText = 'UPDATE creatures SET sightings = sightings + 1 WHERE id = $1';
+    pool.query(queryText, [updateId]).then((result) => {
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log(`Error in PUT ${error}`);
         res.sendStatus(500);
     })
 })
